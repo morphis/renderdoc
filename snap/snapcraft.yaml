@@ -1,0 +1,40 @@
+name: renderdoc
+summary: RenderDoc is a stand-alone graphics debugging tool.
+license: MIT
+website: https://renderdoc.org/
+description: |
+  RenderDoc is a frame-capture based graphics debugger, currently available
+  for Vulkan, D3D11, D3D12, OpenGL, and OpenGL ES development on Windows,
+  Linux, Android, and Nintendo Switch™. It is completely open-source under
+  the MIT license.
+confinement: strict
+version: "0"
+base: core22
+
+apps:
+  renderdoc:
+    command: bin/renderdoc
+
+parts:
+  renderdoc:
+    plugin: nil
+    source: .
+    build-packages:
+    - libx11-dev
+    - libx11-xcb-dev
+    - mesa-common-dev
+    - libgl1-mesa-dev
+    - libxcb-keysyms1-dev
+    - pkg-config
+    - cmake
+    - python3-dev
+    - bison
+    - autoconf
+    - automake
+    - libpcre3-dev
+    - qt5-qmake
+    - libqt5svg5-dev
+    - libqt5x11extras5-dev
+    override-build: |
+      cmake -DCMAKE_BUILD_TYPE=Debug -Bbuild -H.
+      make -j -C build
